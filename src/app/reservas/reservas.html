@@ -1,0 +1,102 @@
+<div class="reservas-container">
+  <div class="reservas-header">
+    <span class="badge">✈️ ¡Empieza a Viajar!</span>
+    <h2>Reserva Tu Próxima Aventura</h2>
+    <p>Completa el siguiente formulario y nos pondremos en contacto contigo para coordinar todos los detalles.</p>
+  </div>
+
+  <div class="reservas-card">
+    @if (!reservaExitosa) {
+      <form [formGroup]="reservaForm" (ngSubmit)="onSubmit()" class="reserva-form">
+        
+        <div class="form-group">
+          <label for="nombreCompleto">Nombre Completo</label>
+          <input 
+            type="text" 
+            id="nombreCompleto" 
+            formControlName="nombreCompleto" 
+            placeholder="Ej. Rouss Velasquez"
+          >
+          @if (reservaForm.get('nombreCompleto')?.invalid && reservaForm.get('nombreCompleto')?.touched) {
+            <small class="error-msg">Por favor ingresa un nombre válido (mínimo 3 caracteres).</small>
+          }
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="correo">Correo Electrónico</label>
+            <input 
+              type="email" 
+              id="correo" 
+              formControlName="correo" 
+              placeholder="tu@correo.com"
+            >
+            @if (reservaForm.get('correo')?.invalid && reservaForm.get('correo')?.touched) {
+              <small class="error-msg">Ingresa un correo electrónico válido.</small>
+            }
+          </div>
+
+          <div class="form-group">
+            <label for="telefono">Teléfono / Celular</label>
+            <input 
+              type="tel" 
+              id="telefono" 
+              formControlName="telefono" 
+              placeholder="Ej. 70000000"
+            >
+            @if (reservaForm.get('telefono')?.invalid && reservaForm.get('telefono')?.touched) {
+              <small class="error-msg">Ingresa un número de teléfono válido.</small>
+            }
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="destino">Destino Turístico</label>
+            <select id="destino" formControlName="destino">
+              <option value="" disabled selected>Selecciona un destino</option>
+              @for (dest of destinosDisponibles; track dest) {
+                <option [value]="dest">{{ dest }}</option>
+              }
+            </select>
+            @if (reservaForm.get('destino')?.invalid && reservaForm.get('destino')?.touched) {
+              <small class="error-msg">Debes seleccionar un destino.</small>
+            }
+          </div>
+
+          <div class="form-group">
+            <label for="fechaViaje">Fecha del Viaje</label>
+            <input 
+              type="date" 
+              id="fechaViaje" 
+              formControlName="fechaViaje"
+            >
+            @if (reservaForm.get('fechaViaje')?.invalid && reservaForm.get('fechaViaje')?.touched) {
+              <small class="error-msg">Selecciona una fecha para tu viaje.</small>
+            }
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="cantidadPersonas">Número de Personas</label>
+          <input 
+            type="number" 
+            id="cantidadPersonas" 
+            formControlName="cantidadPersonas" 
+            min="1" 
+            max="10"
+          >
+        </div>
+
+        <button type="submit" class="btn-enviar">Confirmar Reserva</button>
+      </form>
+    } @else {
+      <div class="success-message">
+        <div class="success-icon">🎉</div>
+        <h3>¡Reserva Solicitada con Éxito!</h3>
+        <p>Gracias por confiar en nosotros, Rouss. Pronto nos pondremos en contacto contigo para finalizar los detalles de tu aventura.</p>
+        <button (click)="nuevaReserva()" class="btn-primary">Hacer otra reserva</button>
+      </div>
+    }
+  </div>
+</div>

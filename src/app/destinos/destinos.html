@@ -1,0 +1,28 @@
+<div class="destinos-container">
+  <div class="destinos-header">
+    <span class="badge">✨ Explora el Mundo</span>
+    <h2>Nuestros Destinos Destacados</h2>
+    <p>Elige tu próxima aventura, descubre paisajes inolvidables y vive experiencias únicas.</p>
+  </div>
+
+  <div class="destinos-grid">
+    @for (destino of destinosList; track destino.id) {
+      <div class="destino-card">
+        <div class="card-img-wrapper">
+          <img [src]="destino.imagen" [alt]="destino.nombre">
+          <span class="badge-precio">{{ destino.precio }}</span>
+        </div>
+        
+        <div class="card-body">
+          <span class="duracion">🕒 {{ destino.duracion }}</span>
+          <h3>{{ destino.nombre }}</h3>
+          <p>{{ destino.descripcion }}</p>
+          
+          <button (click)="seleccionarDestino(destino)" routerLink="/reservas" class="btn-reservar">
+            Reservar este destino
+          </button>
+        </div>
+      </div>
+    }
+  </div>
+</div>
